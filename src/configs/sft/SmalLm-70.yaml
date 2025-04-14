@@ -1,0 +1,58 @@
+seed: 42
+model_name: smallm
+model_suffix: 70_rope_instruct
+dataset_dir: datasets/sft
+tokenizer: Azrail/ru_en_gpt_like_tokenizer
+num_proc: 8
+model_name_or_path: Azrail/smallm_70_rope
+
+training_arguments:
+  _target_: trl.SFTConfig
+  output_dir: models/${model_name}_${model_suffix}
+  seed: ${seed}
+  data_seed: ${seed}
+  push_to_hub: True
+  resume_from_checkpoint: False
+  hub_model_id: ${model_name}_${model_suffix}
+  hub_strategy: checkpoint
+
+  #optimizer params
+  optim: adamw_apex_fused
+  learning_rate: 5e-5
+  weight_decay: 1e-4
+
+  #dataloader params
+  per_device_train_batch_size: 32
+  per_device_eval_batch_size: 4
+  dataloader_num_workers: 3
+
+  #logging params
+  gradient_accumulation_steps: 8
+  log_level: info
+  logging_steps: 50
+  run_name: ${model_name}_${model_suffix}
+  report_to: wandb
+  include_tokens_per_second: True
+  include_num_input_tokens_seen: True
+
+  #taining params
+  eval_strategy: 'steps'
+  eval_steps: 500
+  max_grad_norm: 1.0
+  num_train_epochs: 2
+  warmup_ratio: 0.2
+  save_steps: 1000
+  bf16: True
+  bf16_full_eval: True
+  gradient_checkpointing: False
+  torch_compile_backend: inductor
+  torch_compile: True
+  torch_compile_mode: max-autotune-no-cudagraphs
+  max_seq_length: ${model_config.max_seq_len}
+
+model_config:
+  max_seq_len: 2048
+  original_seq_len: 1024
+  tie_word_embeddings: True
+  torch_dtype: bfloat16
+  attn_implementation: flash_attention_2

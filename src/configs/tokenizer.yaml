@@ -1,0 +1,16 @@
+data_dir: "./datasets/pretrain"
+save_dir: "./models/tokenizer"
+
+trainer_params:
+  min_frequency: 10
+  max_token_length: 20
+  vocab_size: 60000
+
+num_reserved_tokens: 11
+cache_capacity: 2048
+tainer_batch_size: 4096
+push_to_hub: ru_en_gpt_like_tokenizer
+special_tokens:
+  eos_token: "<|endoftext|>"
+  bos_token: "<|beginoftext|>"
+  pad_token: "<|endoftext|>"

@@ -1,0 +1,6 @@
+[flake8]
+exclude = .git,build
+ignore = E203, E266, E501, W503, C901, F401, F403, E402
+max-line-length = 100
+max-complexity = 18
+select = B,C,E,F,W,T4,B9

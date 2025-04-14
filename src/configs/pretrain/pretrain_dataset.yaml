@@ -1,0 +1,65 @@
+type: pretrain
+
+datasets:
+  fineweb:
+    params:
+      path: parquet
+      split: train
+    dataset_part:
+      base_url: "https://huggingface.co/datasets/HuggingFaceTB/smollm-corpus/resolve/main/fineweb-edu-dedup/"
+      file_pattern: "train-{i:05d}-of-00234.parquet"
+      start_idx: 0
+      end_idx: 25
+    select_columns: ['text']
+
+  # cultura_ru:
+  #   params:
+  #     path: parquet
+  #     split: train
+  #   dataset_part:
+  #     base_url: https://huggingface.co/datasets/deepvk/cultura_ru_edu/resolve/main/data/
+  #     file_pattern: "train-{i:03d}.parquet"
+  #     start_idx: 0
+  #     end_idx: 10
+  #   select_columns: ['text']
+
+  pythonedu:
+    params:
+      path: parquet
+      split: train
+    dataset_part:
+      base_url: "https://huggingface.co/datasets/ZhentingNLP/code_pretraining_data/resolve/main/data/"
+      file_pattern: "train-{i:05d}-of-00075.parquet"
+      start_idx: 0
+      end_idx: 50
+    select_columns: ['text']
+
+  cosmopedia:
+    params:
+      path: parquet
+      split: train
+    dataset_part:
+      base_url: https://huggingface.co/datasets/HuggingFaceTB/smollm-corpus/resolve/main/cosmopedia-v2/
+      file_pattern: train-{i:05}-of-00104.parquet
+      start_idx: 0
+      end_idx: 25
+    select_columns: ['text']
+
+  # wikipedia_ru:
+  #   params:
+  #     path: danasone/wikipedia_ru
+  #     split: train
+  #   select_columns: ['text']
+
+  finemath:
+    params:
+      path: HuggingFaceTB/finemath
+      split: train
+      name: finemath-4plus
+    select_columns: ['text']
+
+build_params:
+  num_proc: 16
+  save_dir: datasets/pretrain
+  test_size: 0.01
+  seed: 42

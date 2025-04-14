@@ -1,0 +1,29 @@
+type: instruct
+
+datasets:
+  pycoderu:
+    params:
+      path: MexIvanov/CodeExercise-Python-27k-ru
+      split: train
+    process_data:
+      user_col: instruction
+      assistant_col: output
+
+  smoltalk:
+    params:
+      path: HuggingFaceTB/smoltalk
+      name: all
+      split: train
+
+  # ruinstruct:
+  #   params:
+  #     path: d0rj/ru-instruct
+  #     split: train
+  #   chat_col: conversations
+
+build_params:
+  num_proc: 16
+  save_dir: datasets/sft
+  test_size: 0.01
+  seed: 42
+  tokenizer: Azrail/ru_en_gpt_like_tokenizer
